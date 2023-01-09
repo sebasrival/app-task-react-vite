@@ -1,4 +1,4 @@
 import { createContext } from "react";
 
-export const appTodoContext = createContext([])
+export const TodoContext = createContext([])
 

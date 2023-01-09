@@ -1,60 +1,79 @@
-import { useEffect, useState } from "react"
-import { TiDeleteOutline } from "react-icons/ti"
-import { FaPen } from "react-icons/fa" 
+import { useEffect, useState } from "react";
+import { TiDeleteOutline } from "react-icons/ti";
+import { FaPen } from "react-icons/fa";
 
 interface TodoType {
-  id: string,
-  title: string,
-  description: string,
-  done: boolean
+  id: string;
+  title: string;
+  description: string;
+  done: boolean;
 }
 
-export const TodoList= () => {
+export const TodoList = () => {
+  const data: Array<TodoType> = [
+    {
+      id: '1',
+      title: "Titulo de la tarea",
+      description: "Esto es una decripcion de una tarea",
+      done: false,
+    },
+    {
+      id: '2',
+      title: "Titulo de la tarea",
+      description:
+        "Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea",
+      done: false,
+    },
+  ];
 
-  const data = [{
-    id: 1,
-    title: 'Titulo de la tarea',
-    description: 'Esto es una decripcion de una tarea',
-    doneTask: true
-  },
-  {
-    id: 1,
-    title: 'Titulo de la tarea',
-    description: 'Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea',
-    doneTask: true
+  const [todo, setTodo] = useState(data);
+
+  const handlerClick = (id: string) => {
+    let index = todo.findIndex(x => x.id === id)
+    todo[index].done = !todo[index].done
+    setTodo([...todo])
+  };
+
+  const handlerDeleteClick = (id: string) => {
+    let temp = todo.filter(x => x.id !== id)
+    setTodo(temp)
   }
-  ]
 
-  const [todo, setTodo] = useState(data)
-
-  const handClick = () => {
-    setTodo([...todo, { id: 1,
-      title: 'Titulo de la tarea',
-      description: 'Esto es una decripcion de una tarea',
-      doneTask: false}])
-      console.log('asd')
-  }
-
-  useEffect(()=>{
-    console.log(todo)
+  useEffect(() => {
+    console.log("array", { ...todo })
   })
 
   return (
-    <div className="w-full flex-col justify-center items-center content-center">
-      { todo.map((x)=>(
-        <div className={`mb-3 w-5/12 min-h-[80px] m-auto bg-teal-900 px-4 pt-1 pb-2 hover:bg-teal-800 cursor-pointer shadow-sm shadow-gray-900 relative`} onClick={() => handClick()}>
-          <div className={`font-bold text-sm text mb-1 ${x.doneTask === true? 'line-through': ''}`}>{x.title}</div>
-          <p className={`text-xs text-start ${x.doneTask === true ? 'line-through': ''}`}>
-            {x.description}
-          </p>
-          <button className="absolute top-1 right-1 hover:text-red-600">
-            <TiDeleteOutline  className="h-5" />
+    <div className="flex gap-3 w-full flex-col justify-center items-center content-center">
+      {todo.map((x) => (
+        <div
+          className={`w-10/12 min-h-[80px] m-auto bg-teal-900 px-4 pt-1 pb-2 hover:bg-teal-800 cursor-pointer shadow-sm shadow-gray-900 relative`}
+          key={x.id}
+        >
+          <div
+            onClick={() => handlerClick(x.id)}
+          >
+            <div
+              className={`font-bold text-lg text mb-1`}
+            >
+              {x.title}
+            </div>
+            <p
+              className={`text-base text-start ${x.done === true ? "line-through" : ""
+                }`}
+            >
+              {x.description}
+            </p>
+          </div>
+          <button className="absolute right-1 top-1 hover:text-red-600" title="Eliminar"
+            onClick={() => handlerDeleteClick(x.id)}>
+            <TiDeleteOutline size={30} />
           </button>
-          <button className="absolute top-1 right-6 hover:text-yellow-600">
-            <FaPen className="h-3 m-1"/>
+          <button className="absolute right-10 top-2 hover:text-yellow-600">
+            <FaPen size={20} />
           </button>
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
