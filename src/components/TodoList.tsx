@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { TiDeleteOutline } from "react-icons/ti";
 import { FaPen } from "react-icons/fa";
+import { useTodo } from "../context/AppContext";
 
-interface TodoType {
+export interface TodoType {
   id: string;
   title: string;
   description: string;
@@ -10,23 +11,8 @@ interface TodoType {
 }
 
 export const TodoList = () => {
-  const data: Array<TodoType> = [
-    {
-      id: '1',
-      title: "Titulo de la tarea",
-      description: "Esto es una decripcion de una tarea",
-      done: false,
-    },
-    {
-      id: '2',
-      title: "Titulo de la tarea",
-      description:
-        "Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea Esto es una decripcion de una tarea",
-      done: false,
-    },
-  ];
-
-  const [todo, setTodo] = useState(data);
+  const { state, dispatch } = useTodo()
+  const [todo, setTodo] = useState(state);
 
   const handlerClick = (id: string) => {
     let index = todo.findIndex(x => x.id === id)
@@ -45,13 +31,23 @@ export const TodoList = () => {
 
   return (
     <div className="flex gap-3 w-full flex-col justify-center items-center content-center">
-      {todo.map((x) => (
+      {todo?.map((x) => (
         <div
           className={`w-10/12 min-h-[80px] m-auto bg-teal-900 px-4 pt-1 pb-2 hover:bg-teal-800 cursor-pointer shadow-sm shadow-gray-900 relative`}
           key={x.id}
         >
           <div
-            onClick={() => handlerClick(x.id)}
+            onClick={() => {
+              handlerClick(x.id)
+              dispatch({
+                type: 'ADD_TODO', payload: {
+                  id: '1',
+                  title: "Titulo de la tarea",
+                  description: "Esto es una decripcion de una tarea",
+                  done: false,
+                }
+              })
+            }}
           >
             <div
               className={`font-bold text-lg text mb-1`}
