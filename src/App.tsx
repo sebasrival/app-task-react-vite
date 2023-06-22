@@ -13,6 +13,7 @@ export const App = () => {
           <Routes>
             <Route path="/" element={<TodoList />} />
             <Route path="/add" element={<TodoForm />} />
+            <Route path="/edit/:id" element={<TodoForm />} />
           </Routes>
         </TodoProvider>
       </div>
