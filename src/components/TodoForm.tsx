@@ -20,10 +20,11 @@ export const TodoForm = () => {
     event.preventDefault()
     if (task.id) {
       dispatch({ type: "UPDATE_TODO", payload: task })
-    } else {
+      navigate('/')
+    } else if (task.title !== '' || task.description !== '') {
       dispatch({ type: "ADD_TODO", payload: { id: crypto.randomUUID(), description: task.description, done: false, title: task.title } })
+      navigate('/')
     }
-    navigate('/')
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -1,5 +1,6 @@
-import { createContext, Dispatch, ReactNode, useContext, useReducer } from "react";
+import { createContext, Dispatch, ReactNode, useContext, useEffect, useReducer } from "react";
 import { TodoType } from "../components/TodoList";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const initialState = [] as TodoType[];
 
@@ -62,8 +63,12 @@ function todoReducer(state: TodoType[], action: TodoAction): TodoType[] {
 
 export const TodoProvider: React.FC<PropsProvider> = ({ children }) => {
 
-    const [tasks, dispatch] = useReducer(todoReducer, initialState)
+    const [storage, setStorage] = useLocalStorage<TodoType[]>('taks', initialState)
+    const [tasks, dispatch] = useReducer(todoReducer, storage)
 
+    useEffect(() => {
+        setStorage(tasks)
+    }, [tasks])
 
     return (
         <>
