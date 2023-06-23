@@ -21,7 +21,7 @@ export const TodoForm = () => {
     if (task.id) {
       dispatch({ type: "UPDATE_TODO", payload: task })
       navigate('/')
-    } else if (task.title !== '' || task.description !== '') {
+    } else if (task.title !== '' && task.description !== '') {
       dispatch({ type: "ADD_TODO", payload: { id: crypto.randomUUID(), description: task.description, done: false, title: task.title } })
       navigate('/')
     }

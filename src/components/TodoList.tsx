@@ -33,7 +33,7 @@ export const TodoList = () => {
     <div className="flex gap-4 w-full flex-col justify-center items-center content-center">
       {tasks?.map((x) => (
         <div
-          className={`w-10/12 min-h-[80px] m-auto bg-cyan-900 px-4 pt-1 pb-2 hover:bg-cyan-700 cursor-pointer shadow-sm shadow-gray-900 relative rounded-lg border-gray-700 border`}
+          className={`w-10/12 min-h-[80px] m-auto bg-cyan-900 px-4 pt-1 pb-2 cursor-pointer  shadow-sm shadow-gray-900 relative rounded-lg border-gray-700 border`}
           key={x.id}
         >
           <div
@@ -47,10 +47,10 @@ export const TodoList = () => {
               {x.title}
             </div>
             <p
-              className={`text-base text-start ${x.done === true ? "line-through" : ""
+              className={`text-base text-start ${x.done === true ? "line-through decoration-2" : ""
                 }`}
             >
-              {x.description}
+              <span className="cursor-text">{x.description}</span>
             </p>
           </div>
           <button className="absolute right-1 top-1 hover:text-red-600" title="Eliminar"
