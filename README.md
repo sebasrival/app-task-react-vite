@@ -6,6 +6,7 @@ Languaje y conceptos utilizados para hacer la app:
 - TypeScript
 - Context API
 - Reducer
+- LocalStorage
 
 Se utilizo dev container con pnpm y vite.
 
